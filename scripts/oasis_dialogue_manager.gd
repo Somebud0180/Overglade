@@ -6,6 +6,7 @@ var overlay_scene: overlay_screen = null
 var current_traverser: OasisTraverser = null
 var _waiting_for_response: bool = false
 var _current_responses: Array[String] = []
+var _ignore_input_until_release: bool = false
 
 signal dialogue_started
 signal dialogue_ended
@@ -17,6 +18,14 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if not is_dialogue_active:
+		return
+	
+	# Consume input release to prevent carry-over from previous state
+	if _ignore_input_until_release:
+		if event is InputEventKey and not event.pressed:
+			_ignore_input_until_release = false
+		elif event is InputEventMouseButton and not event.pressed:
+			_ignore_input_until_release = false
 		return
 	
 	if _waiting_for_response:
@@ -40,6 +49,8 @@ func _input(event: InputEvent) -> void:
 		if should_advance:
 			advance_dialogue()
 			get_tree().get_root().set_input_as_handled()
+			# Set flag to ignore input until key/mouse is released
+			_ignore_input_until_release = true
 
 func advance_dialogue() -> void:
 	if current_traverser and not _waiting_for_response:
@@ -54,10 +65,6 @@ func select_response(index: int) -> void:
 	
 	_waiting_for_response = false
 	_current_responses.clear()
-	
-	# Hide response UI
-	if overlay_scene:
-		overlay_scene.hide_responses()
 	
 	# Select the response and continue
 	current_traverser.next(index)
@@ -123,9 +130,12 @@ func _on_responses(items: Array[String]) -> void:
 	_current_responses = items
 	
 	if overlay_scene:
-		# Hide the main dialogue bubble
-		overlay_scene.hide_dialogue_bubble()
-		# Show response choices
+		# Hide the continue prompt when showing responses
+		if overlay_scene.has_node("%Prompt"):
+			print("Yeah")
+			overlay_scene.get_node("%Prompt").visible = false
+		
+		# Show response choices (keep the main dialogue bubble visible)
 		overlay_scene.show_responses(items)
 
 func _on_finished() -> void:
@@ -145,4 +155,5 @@ func end_dialogue() -> void:
 	
 	if overlay_scene:
 		overlay_scene.hide_dialogue_bubble()
+		overlay_scene.hide_responses()
 		overlay_scene.change_back_visibility(true)

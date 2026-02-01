@@ -156,6 +156,10 @@ func next(response_index := 0) -> void:
 		_responded = true
 		_respond(response_index)
 
+	# Always filter responses so they're available
+	if _responses.size() == 0:
+		_responses = _filter_responses()
+
 	if _has_prompt():
 		prompted = true
 		prompt.emit(_next_prompt())
@@ -163,7 +167,6 @@ func next(response_index := 0) -> void:
 	if _has_prompt():
 		return
 
-	_responses = _filter_responses()
 	if _has_responses() and not _responded:
 		responses.emit(_translate_responses())
 	elif not prompted:
@@ -196,7 +199,11 @@ func _next_prompt() -> String:
 
 	# Only increment if we are still on the same branch.
 	if _current.id == current_branch:
-		_current_exclusive_event(&"increment_prompt_index")
+		# Try to use the controller's increment method
+		var was_handled = _current_exclusive_event(&"increment_prompt_index")
+		# If no controller handled it, just increment directly
+		if not was_handled:
+			_p += 1
 
 	return translated
 
@@ -235,7 +242,7 @@ func _current_event(method: StringName) -> void:
 		_controllers[a].call(method, self)
 
 
-func _current_exclusive_event(method: StringName) -> void:
+func _current_exclusive_event(method: StringName) -> bool:
 	var handled: Array[String] = []
 	for annotation in _current.annotations:
 		if not annotation in _controllers:
@@ -250,3 +257,5 @@ func _current_exclusive_event(method: StringName) -> void:
 				"Multiple controllers (%s) handled method (%s). When only one should." %
 				[ handled, method ]
 		)
+	
+	return handled.size() > 0
