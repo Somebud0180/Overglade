@@ -3,7 +3,19 @@
 [ext_resource type="Theme" uid="uid://cpc2vu26syw2w" path="res://assets/tres/overlay_theme.tres" id="1_r2eog"]
 [ext_resource type="Script" uid="uid://cqpeqjjqi7f2p" path="res://scripts/overlay.gd" id="2_p5j10"]
 [ext_resource type="Texture2D" uid="uid://swas3bmd3bj1" path="res://textures/interface/interact.png" id="2_sfd0e"]
+[ext_resource type="Script" uid="uid://bhaueknjc1gpt" path="res://scripts/interact_prompt.gd" id="4_0miq5"]
 [ext_resource type="Texture2D" uid="uid://cpu7peo34nmhd" path="res://textures/interface/back.png" id="4_p5j10"]
+[ext_resource type="Script" uid="uid://btkcv2ywkxx5d" path="res://scripts/back_prompt.gd" id="6_nx175"]
+[ext_resource type="Texture2D" uid="uid://cywv5i5o345xi" path="res://textures/interface/chat_bubble.png" id="7_tn5s6"]
+[ext_resource type="FontFile" uid="uid://cvg7xg5lalb57" path="res://assets/PlaypenSans_Bundle/Variable/PlaypenSans[wght].ttf" id="8_lhcu8"]
+
+[sub_resource type="FontVariation" id="FontVariation_cpe4y"]
+base_font = ExtResource("8_lhcu8")
+
+[sub_resource type="LabelSettings" id="LabelSettings_lhcu8"]
+font = SubResource("FontVariation_cpe4y")
+font_size = 32
+font_color = Color(0, 0, 0, 1)
 
 [node name="Overlay" type="Control" unique_id=1150663332 groups=["Overlay"]]
 layout_mode = 3
@@ -24,15 +36,18 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="InteractPrompt" type="TextureButton" parent="MarginContainer" unique_id=475952089]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(172, 48)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 size_flags_vertical = 8
 texture_normal = ExtResource("2_sfd0e")
 ignore_texture_size = true
 stretch_mode = 5
+script = ExtResource("4_0miq5")
 
 [node name="BackPrompt" type="TextureButton" parent="MarginContainer" unique_id=1184257053]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(172, 48)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -40,3 +55,28 @@ size_flags_vertical = 8
 texture_normal = ExtResource("4_p5j10")
 ignore_texture_size = true
 stretch_mode = 5
+script = ExtResource("6_nx175")
+
+[node name="SpeechBubble" type="NinePatchRect" parent="MarginContainer" unique_id=2114806555]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("7_tn5s6")
+region_rect = Rect2(0, 0, 264, 264)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="SpeechLabel" type="Label" parent="MarginContainer/SpeechBubble" unique_id=479758189]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Yay"
+label_settings = SubResource("LabelSettings_lhcu8")
+horizontal_alignment = 1
+vertical_alignment = 1

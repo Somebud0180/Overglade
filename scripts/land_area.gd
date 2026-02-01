@@ -5,10 +5,10 @@ class_name land_area
 @export var destination_name: String
 @export var entry_position: Vector2 = Vector2(640, 360)  # Default center position
 @export var boundary_name: String = ""  # Name of boundary node to use (e.g., "BoundaryNP", "BoundaryP", or "Area2D")
-var overlay: overlay
+var overlay_scene: overlay
 
 func _ready() -> void:
-	overlay = get_tree().get_first_node_in_group("Overlay")
+	overlay_scene = get_tree().get_first_node_in_group("Overlay")
 	connect("body_entered", _on_body_entered)
 	connect("body_exited", _on_body_exited)
 
@@ -33,11 +33,11 @@ func interact() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body is player:
 		body.enter_area(self)
-		if overlay:
-			overlay.change_interact_visibility(true)
+		if overlay_scene:
+			overlay_scene.change_interact_visibility(true)
 
 func _on_body_exited(body: Node) -> void:
 	if body is player:
 		body.exit_area(self)
-		if overlay:
-			overlay.change_interact_visibility(false)
+		if overlay_scene:
+			overlay_scene.change_interact_visibility(false)

@@ -1,40 +1,37 @@
 extends Node2D
 
 var current_map: Node2D = null
-var player: CharacterBody2D = null
-var overlay: Control = null
+var player_node: player = null
+var overlay_scene: overlay = null
 var return_position: Vector2 = Vector2.ZERO
 var previous_map: Node2D = null
 
 func _ready() -> void:
 	# Cache references to essential nodes
-	player = get_node_or_null("Chomp")
-	overlay = get_node_or_null("Overlay")
+	player_node = get_node_or_null("Chomp")
+	overlay_scene = get_tree().get_first_node_in_group("Overlay")
 	current_map = get_node_or_null("Map")
 	
-	if player:
-		player.game_manager = self
-		# Spawn player at initial SpawnPoint
+	if player_node:
+		player_node.game_manager = self
+		player_node.find_current_boundary(current_map)
+		# Spawn player_node at initial SpawnPoint
 		var spawn_point = get_node_or_null("SpawnPoint")
 		if spawn_point:
-			player.global_position = spawn_point.global_position
+			player_node.global_position = spawn_point.global_position
 	
-	if overlay:
-		overlay.visible = true
+	if overlay_scene:
+		overlay_scene.visible = true
 
 func load_map(scene: PackedScene, entry_position: Vector2 = Vector2.ZERO, boundary_name: String = "") -> void:
 	if not scene:
 		return
 	
-	# Store return information
-	if current_map and player:
-		return_position = player.global_position
+	# Store return information and hide current map
+	if current_map and player_node:
+		return_position = player_node.global_position
 		previous_map = current_map
-	
-	# Remove old map
-	if current_map:
-		remove_child(current_map)
-		current_map.queue_free()
+		current_map.visible = false
 	
 	# Load new map
 	current_map = scene.instantiate()
@@ -46,18 +43,15 @@ func load_map(scene: PackedScene, entry_position: Vector2 = Vector2.ZERO, bounda
 	if spawn_point:
 		spawn_position = spawn_point.global_position
 	
-	# Reorder nodes so player is on top
-	if player:
-		move_child(player, -1)
-		player.global_position = spawn_position
-		_update_player_boundary(boundary_name)
-	
-	if overlay:
-		move_child(overlay, -1)
+	# Reorder nodes so player_node is on top
+	if player_node:
+		move_child(player_node, -1)
+		player_node.global_position = spawn_position
+		player_node.find_current_boundary(current_map)
 	
 	# Show back button when in a land area
-	if overlay:
-		overlay.change_back_visibility(true)
+	if overlay_scene:
+		overlay_scene.change_back_visibility(true)
 
 func return_to_previous_map() -> void:
 	if not previous_map:
@@ -73,46 +67,23 @@ func return_to_previous_map() -> void:
 	add_child(current_map)
 	previous_map = null
 	
-	# Restore player position
-	if player:
-		move_child(player, -1)
-		player.global_position = return_position
-		_update_player_boundary()
-		player.is_in_land_area = false
+	# Restore player_node position
+	current_map.visible = true
+	move_child(player_node, -1)
+	player_node.global_position = return_position
+	_update_player_boundary()
+	player_node.is_in_land_area = false
 	
-	if overlay:
-		move_child(overlay, -1)
-		overlay.change_back_visibility(false)
-		overlay.change_interact_visibility(false)
+	if overlay_scene:
+		move_child(overlay_scene, -1)
+		overlay_scene.change_back_visibility(false)
+		overlay_scene.change_interact_visibility(false)
 
-func _update_player_boundary(boundary_name: String = "") -> void:
-	if not player or not current_map:
+func _update_player_boundary() -> void:
+	if not player_node or not current_map:
 		return
 	
-	# If a specific boundary name is provided, use it
-	if boundary_name != "":
-		var boundary = current_map.get_node_or_null(boundary_name + "/CollisionPolygon2D")
-		if not boundary:
-			# Try without the /CollisionPolygon2D suffix (in case it's a direct path)
-			boundary = current_map.get_node_or_null(boundary_name)
-		if boundary and boundary is CollisionPolygon2D:
-			player.collision_polygon = boundary.polygon
-			return
-	
-	# Otherwise, try to find boundary collision polygons in the current map
-	var boundary_np = current_map.get_node_or_null("BoundaryNP/CollisionPolygon2D")
-	var boundary_p = current_map.get_node_or_null("BoundaryP/CollisionPolygon2D")
-	
-	if boundary_np and boundary_p:
-		# Update player's collision polygon based on park accessibility
-		player._update_boundary()
-	elif boundary_np:
-		# Only non-park boundary exists
-		player.collision_polygon = boundary_np.polygon
-	elif boundary_p:
-		# Only park boundary exists
-		player.collision_polygon = boundary_p.polygon
-	# If no boundaries found, player keeps their current boundary
+	player_node.find_current_boundary(current_map)
 
 func _find_spawn_point(node: Node) -> Marker2D:
 	# First check if the node itself is a SpawnPoint
