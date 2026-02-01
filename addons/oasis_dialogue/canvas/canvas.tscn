@@ -1,0 +1,274 @@
+[gd_scene load_steps=34 format=3 uid="uid://4plc4vhymybs"]
+
+[ext_resource type="Script" uid="uid://bkn5mac6gdvq3" path="res://addons/oasis_dialogue/canvas/canvas.gd" id="1_pyvqf"]
+[ext_resource type="Theme" uid="uid://b17l0ux5wllk5" path="res://addons/oasis_dialogue/canvas/canvas_theme.tres" id="1_ta1sa"]
+[ext_resource type="Script" uid="uid://e5g8rlgh7tl7" path="res://addons/oasis_dialogue/canvas/language_server.gd" id="4_0dkm1"]
+[ext_resource type="Script" uid="uid://collm4lemrw6i" path="res://addons/oasis_dialogue/canvas/remove_character_handler.gd" id="4_6xxxj"]
+[ext_resource type="Script" uid="uid://cwosx2xibo8sq" path="res://addons/oasis_dialogue/canvas/add_branch_button.gd" id="4_wvnn7"]
+[ext_resource type="Script" uid="uid://dcu534fs10qbb" path="res://addons/oasis_dialogue/canvas/semantic_visitors.gd" id="5_65wvt"]
+[ext_resource type="Script" uid="uid://dug54oaf67dch" path="res://addons/oasis_dialogue/canvas/character_tree.gd" id="6_gyuj5"]
+[ext_resource type="Script" uid="uid://bnp7di4ksvma5" path="res://addons/oasis_dialogue/branch/branch_edit.gd" id="7_54gq2"]
+[ext_resource type="Script" uid="uid://bbsmsgjqhjirr" path="res://addons/oasis_dialogue/canvas/rename_character_handler.gd" id="7_n0a6n"]
+[ext_resource type="PackedScene" uid="uid://cbhhlkh2fm53s" path="res://addons/oasis_dialogue/status/status.tscn" id="8_54gq2"]
+[ext_resource type="Script" uid="uid://crlgqb4exlb5x" path="res://addons/oasis_dialogue/canvas/branch_prettier.gd" id="8_h1x05"]
+[ext_resource type="Script" uid="uid://bmsfi1lplad1r" path="res://addons/oasis_dialogue/canvas/unbrancher_visitors.gd" id="8_unkvg"]
+[ext_resource type="Script" uid="uid://dece57l7ihxc2" path="res://addons/oasis_dialogue/canvas/csv_exporter.gd" id="9_xkohu"]
+[ext_resource type="Script" uid="uid://c2pi8wsr6mopo" path="res://addons/oasis_dialogue/canvas/add_character_handler.gd" id="10_6s5dc"]
+[ext_resource type="Script" uid="uid://chio7d8hrpwj8" path="res://addons/oasis_dialogue/canvas/json_exporter.gd" id="10_g4vuv"]
+[ext_resource type="Texture2D" uid="uid://dqhrdft4f7mx7" path="res://addons/oasis_dialogue/assets/add_default_16.png" id="11_ye1hp"]
+[ext_resource type="Texture2D" uid="uid://dlevgagyhy7aj" path="res://addons/oasis_dialogue/assets/add_selected_16.png" id="12_vow0r"]
+[ext_resource type="Script" uid="uid://col6d6dlfwg4s" path="res://addons/oasis_dialogue/canvas/export_handler.gd" id="13_hd21m"]
+[ext_resource type="Texture2D" uid="uid://badhsjdmlotct" path="res://addons/oasis_dialogue/assets/add_hovered_16.png" id="13_oj43n"]
+[ext_resource type="Script" uid="uid://c5bwvouvr2eh" path="res://addons/oasis_dialogue/canvas/call_to_action_handler.gd" id="15_vow0r"]
+[ext_resource type="Script" uid="uid://bquh5t51cxg87" path="res://addons/oasis_dialogue/menu_bar/project.gd" id="16_8jbp4"]
+[ext_resource type="Script" uid="uid://cermt8sjkig0a" path="res://addons/oasis_dialogue/menu_bar/character.gd" id="18_8jbp4"]
+[ext_resource type="Script" uid="uid://brb4crhjdnsbk" path="res://addons/oasis_dialogue/canvas/help_handler.gd" id="19_h00y2"]
+[ext_resource type="PackedScene" uid="uid://cxhc7jrc6kcgo" path="res://addons/oasis_dialogue/toggle_flip_texture_button/toggle_flip_texture_button.tscn" id="20_iqooe"]
+[ext_resource type="Script" uid="uid://c1y6kpvbyhi34" path="res://addons/oasis_dialogue/canvas/responsive_panel_spacer.gd" id="20_kiihh"]
+[ext_resource type="Texture2D" uid="uid://cp6xm2co4r66g" path="res://addons/oasis_dialogue/assets/arrow_default.png" id="21_kiihh"]
+[ext_resource type="Script" uid="uid://bqqvdvreohkk2" path="res://addons/oasis_dialogue/menu_bar/help.gd" id="21_q6oy7"]
+[ext_resource type="Texture2D" uid="uid://bnubw5hqt8rsc" path="res://addons/oasis_dialogue/assets/arrow_hovered.png" id="22_nsqch"]
+[ext_resource type="Script" path="res://addons/oasis_dialogue/canvas/character_call_to_action.gd" id="30_oj43n"]
+[ext_resource type="Script" path="res://addons/oasis_dialogue/canvas/branch_call_to_action.gd" id="31_y5ltl"]
+[ext_resource type="Script" uid="uid://beff6mv4n0m7o" path="res://addons/oasis_dialogue/controls/double_click_at_listener.gd" id="39_nsqch"]
+[ext_resource type="PackedScene" uid="uid://5s7p0xabevpo" path="res://addons/oasis_dialogue/definitions/definitions.tscn" id="41_nsqch"]
+[ext_resource type="Script" uid="uid://bkt8n6baoto56" path="res://addons/oasis_dialogue/canvas/toggle_visibiility.gd" id="42_0fanf"]
+
+[node name="Canvas" type="Control" node_paths=PackedStringArray("_graph") groups=["oasis_registerable"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ta1sa")
+script = ExtResource("1_pyvqf")
+_graph = NodePath("View/Body/HSplitContainer/BranchEdit")
+
+[node name="AddBranch" type="TextureButton" parent="." groups=["oasis_registerable"]]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 32.0
+offset_bottom = 39.0
+tooltip_text = "Add branch"
+texture_normal = ExtResource("11_ye1hp")
+texture_pressed = ExtResource("12_vow0r")
+texture_hover = ExtResource("13_oj43n")
+script = ExtResource("4_wvnn7")
+
+[node name="Model" type="Node" parent="."]
+
+[node name="LanguageServer" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("4_0dkm1")
+
+[node name="SenanticVisitors" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("5_65wvt")
+
+[node name="AddCharacterHandler" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("10_6s5dc")
+
+[node name="RemoveCharacterHandler" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("4_6xxxj")
+
+[node name="RenameCharacterHandler" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("7_n0a6n")
+
+[node name="UnbrancherVisitors" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("8_unkvg")
+
+[node name="BranchPrettier" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("8_h1x05")
+
+[node name="ExportHandler" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("13_hd21m")
+
+[node name="CSVExporter" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("9_xkohu")
+
+[node name="JSONExporter" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("10_g4vuv")
+
+[node name="CallToActionHandler" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("15_vow0r")
+
+[node name="HelpHandler" type="Node" parent="Model" groups=["oasis_registerable"]]
+script = ExtResource("19_h00y2")
+
+[node name="View" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="HBoxContainer" parent="View"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="LeftPanelSpacer" type="Control" parent="View/Header" node_paths=PackedStringArray("_parent_split_container", "_panel")]
+layout_mode = 2
+script = ExtResource("20_kiihh")
+_parent_split_container = NodePath("../../Body")
+_panel = NodePath("../../Body/CharacterTree")
+settings_header = "characters"
+
+[node name="ToggleCharacterPanel" parent="View/Header" groups=["oasis_registerable"] instance=ExtResource("20_iqooe")]
+layout_mode = 2
+texture_normal = ExtResource("21_kiihh")
+texture_hover = ExtResource("22_nsqch")
+settings_header = "characters"
+
+[node name="MenuBar" type="MenuBar" parent="View/Header"]
+layout_mode = 2
+flat = true
+
+[node name="Project" type="PopupMenu" parent="View/Header/MenuBar" groups=["oasis_registerable"]]
+oversampling_override = 1.0
+title = "Project"
+size = Vector2i(200, 100)
+script = ExtResource("16_8jbp4")
+
+[node name="Character" type="PopupMenu" parent="View/Header/MenuBar" groups=["oasis_registerable"]]
+oversampling_override = 1.0
+title = "Character"
+size = Vector2i(164, 116)
+script = ExtResource("18_8jbp4")
+
+[node name="Help" type="PopupMenu" parent="View/Header/MenuBar" groups=["oasis_registerable"]]
+oversampling_override = 1.0
+title = "Help"
+size = Vector2i(164, 116)
+script = ExtResource("21_q6oy7")
+
+[node name="Control" type="Control" parent="View/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToggleDefinitionsPanel" parent="View/Header" groups=["oasis_registerable"] instance=ExtResource("20_iqooe")]
+layout_mode = 2
+texture_normal = ExtResource("21_kiihh")
+texture_hover = ExtResource("22_nsqch")
+flip_h = true
+settings_header = "definitions"
+
+[node name="RightPanelSpacer" type="Control" parent="View/Header" node_paths=PackedStringArray("_parent_split_container", "_panel")]
+layout_mode = 2
+script = ExtResource("20_kiihh")
+_parent_split_container = NodePath("../../Body/HSplitContainer")
+_panel = NodePath("../../Body/HSplitContainer/HSplitContainer")
+settings_header = "definitions"
+
+[node name="Body" type="HSplitContainer" parent="View"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CharacterTree" type="Tree" parent="View/Body" groups=["oasis_registerable"]]
+visible = false
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 3
+hide_folding = true
+hide_root = true
+scroll_horizontal_enabled = false
+script = ExtResource("6_gyuj5")
+
+[node name="DoubleClickAtListener" type="Control" parent="View/Body/CharacterTree" node_paths=PackedStringArray("target")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("39_nsqch")
+target = NodePath("..")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="View/Body"]
+layout_mode = 2
+
+[node name="BranchEdit" type="GraphEdit" parent="View/Body/HSplitContainer" groups=["oasis_registerable"]]
+layout_mode = 2
+size_flags_horizontal = 3
+scroll_offset = Vector2(-168, 0)
+grid_pattern = 1
+snapping_enabled = false
+panning_scheme = 1
+minimap_enabled = false
+show_zoom_buttons = false
+show_grid_buttons = false
+script = ExtResource("7_54gq2")
+
+[node name="Status" parent="View/Body/HSplitContainer/BranchEdit" groups=["oasis_registerable"] instance=ExtResource("8_54gq2")]
+z_index = 1
+layout_mode = 1
+
+[node name="CharacterCallToAction" type="CenterContainer" parent="View/Body/HSplitContainer/BranchEdit" groups=["oasis_registerable"]]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("30_oj43n")
+
+[node name="Label" type="Label" parent="View/Body/HSplitContainer/BranchEdit/CharacterCallToAction"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 64
+text = "add a 
+character"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BranchCallToAction" type="CenterContainer" parent="View/Body/HSplitContainer/BranchEdit" groups=["oasis_registerable"]]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_y5ltl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="View/Body/HSplitContainer/BranchEdit/BranchCallToAction"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="View/Body/HSplitContainer/BranchEdit/BranchCallToAction/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 64
+text = "add a 
+branch"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DoubleClickListener" type="Control" parent="View/Body/HSplitContainer/BranchEdit" node_paths=PackedStringArray("target")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("39_nsqch")
+target = NodePath("..")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="View/Body/HSplitContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Definitions" parent="View/Body/HSplitContainer/HSplitContainer" instance=ExtResource("41_nsqch")]
+layout_mode = 2
+
+[node name="ToggleLeftPanelVisibility" type="Node" parent="View" node_paths=PackedStringArray("button", "target", "container") groups=["oasis_registerable"]]
+script = ExtResource("42_0fanf")
+button = NodePath("../Header/ToggleCharacterPanel")
+target = NodePath("../Body/CharacterTree")
+container = NodePath("../Body")
+settings_header = "characters"
+
+[node name="ToggleRightPanelVisibility" type="Node" parent="View" node_paths=PackedStringArray("button", "target", "container") groups=["oasis_registerable"]]
+script = ExtResource("42_0fanf")
+button = NodePath("../Header/ToggleDefinitionsPanel")
+target = NodePath("../Body/HSplitContainer/HSplitContainer")
+container = NodePath("../Body/HSplitContainer")
+settings_header = "definitions"
+
+[connection signal="double_clicked_at" from="View/Body/CharacterTree/DoubleClickAtListener" to="View/Body/CharacterTree" method="request_add_item_at"]
+[connection signal="double_clicked_at" from="View/Body/HSplitContainer/BranchEdit/DoubleClickListener" to="View/Body/HSplitContainer/BranchEdit" method="add_branch_at"]

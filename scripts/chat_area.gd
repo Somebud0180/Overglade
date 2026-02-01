@@ -3,21 +3,20 @@ class_name chat_area
 
 @export var area_name: String = ""
 @export var npc_name: String = "NPC"
-@export var dialogue_lines: Array[String] = []
 
 var overlay_scene: overlay_screen = null
-var _dialogue: dialogue = null
+var _oasis_character: OasisCharacter = nThull
 
 func _ready() -> void:
 	overlay_scene = get_tree().get_first_node_in_group("OverlayScreen")
 	print("Chat area '%s' ready. OverlayScene found: %s" % [name, overlay_scene != null])
 	
-	# Create dialogue from exported lines if no dialogue_manager exists
-	if dialogue_lines.size() > 0:
-		_create_dialogue_from_lines()
-		print("Chat area ready. Dialogue created with %d lines" % dialogue_lines.size())
-	else:
-		print("Chat area ready. No dialogue lines exported!")
+	# Create OasisCharacter for this NPC
+	_oasis_character = OasisCharacter.new()
+	_oasis_character.character = npc_name.to_lower()
+	_oasis_character.root = 0
+	add_child(_oasis_character)
+	print("Chat area ready. OasisCharacter created for: %s" % npc_name)
 	
 	connect("body_entered", _on_body_entered)
 	connect("body_exited", _on_body_exited)
@@ -47,16 +46,10 @@ func _on_body_exited(body: Node) -> void:
 			overlay_scene.hide_area_name()
 
 func interact() -> void:
-	if not _dialogue:
+	if not _oasis_character:
 		return
 	
 	if DialogueManager.is_in_dialogue():
 		return
 	
-	DialogueManager.start_dialogue(_dialogue)
-
-func _create_dialogue_from_lines() -> void:
-	var lines: Array[dialogue_line] = []
-	for line_text in dialogue_lines:
-		lines.append(dialogue_line.new(npc_name, line_text))
-	_dialogue = dialogue.new(npc_name, lines)
+	DialogueManager.start_dialogue(_oasis_character)

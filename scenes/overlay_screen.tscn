@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cywv5i5o345xi" path="res://textures/interface/chat_bubble.png" id="7_tn5s6"]
 [ext_resource type="FontFile" uid="uid://cvg7xg5lalb57" path="res://assets/PlaypenSans_Bundle/Variable/PlaypenSans[wght].ttf" id="8_lhcu8"]
 [ext_resource type="Texture2D" uid="uid://coegbrbnljs1e" path="res://textures/interface/gradient.png" id="9_05qsj"]
+[ext_resource type="Script" uid="uid://bi03bbvuvpng3" path="res://scripts/response_rect.gd" id="10_ikji4"]
 
 [sub_resource type="FontVariation" id="FontVariation_ikji4"]
 base_font = ExtResource("8_lhcu8")
@@ -20,11 +21,11 @@ variation_opentype = {
 font = SubResource("FontVariation_ikji4")
 font_size = 32
 
-[sub_resource type="FontVariation" id="FontVariation_cpe4y"]
+[sub_resource type="FontVariation" id="FontVariation_rc4e3"]
 base_font = ExtResource("8_lhcu8")
 
-[sub_resource type="LabelSettings" id="LabelSettings_lhcu8"]
-font = SubResource("FontVariation_cpe4y")
+[sub_resource type="LabelSettings" id="LabelSettings_khrc6"]
+font = SubResource("FontVariation_rc4e3")
 font_size = 32
 font_color = Color(0, 0, 0, 1)
 
@@ -36,6 +37,13 @@ variation_opentype = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_ikji4"]
 font = SubResource("FontVariation_05qsj")
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_cpe4y"]
+base_font = ExtResource("8_lhcu8")
+
+[sub_resource type="LabelSettings" id="LabelSettings_lhcu8"]
+font = SubResource("FontVariation_cpe4y")
 font_color = Color(0, 0, 0, 1)
 
 [node name="Overlay" type="Control" unique_id=1150663332 groups=["OverlayScreen"]]
@@ -117,7 +125,7 @@ layout_mode = 2
 theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 440
 theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 66
+theme_override_constants/margin_bottom = 88
 
 [node name="SpeechBubble" type="NinePatchRect" parent="MarginContainer/SpeechMarginContainer" unique_id=1867986002]
 unique_name_in_owner = true
@@ -140,7 +148,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 text = "Yay"
-label_settings = SubResource("LabelSettings_lhcu8")
+label_settings = SubResource("LabelSettings_khrc6")
 
 [node name="Prompt" type="Label" parent="MarginContainer/SpeechMarginContainer/SpeechBubble" unique_id=48262703]
 unique_name_in_owner = true
@@ -156,3 +164,60 @@ text = "Press anywhere to continue"
 label_settings = SubResource("LabelSettings_ikji4")
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="ResponseMarginContainer" type="MarginContainer" parent="MarginContainer" unique_id=410262065]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 560
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/ResponseMarginContainer" unique_id=901338243]
+layout_mode = 2
+split_offsets = PackedInt32Array(-132)
+split_offset = -132
+
+[node name="Response1" type="NinePatchRect" parent="MarginContainer/ResponseMarginContainer/HSplitContainer" unique_id=1129736532]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("7_tn5s6")
+region_rect = Rect2(0, 0, 264, 264)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+script = ExtResource("10_ikji4")
+
+[node name="SpeechLabel" type="Label" parent="MarginContainer/ResponseMarginContainer/HSplitContainer/Response1" unique_id=457634363]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.15
+anchor_right = 0.975
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+text = "Yay"
+label_settings = SubResource("LabelSettings_lhcu8")
+
+[node name="Response2" type="NinePatchRect" parent="MarginContainer/ResponseMarginContainer/HSplitContainer" unique_id=1535651553]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("7_tn5s6")
+region_rect = Rect2(0, 0, 264, 264)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="SpeechLabel" type="Label" parent="MarginContainer/ResponseMarginContainer/HSplitContainer/Response2" unique_id=153715785]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.15
+anchor_right = 0.975
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+text = "Yay"
+label_settings = SubResource("LabelSettings_lhcu8")

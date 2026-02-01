@@ -1,0 +1,53 @@
+[[0]]
+[value]
+@track
+@prompt
+Hey...
+@response
+Hi { branch 1 }
+How are you? { branch 2 }
+[position_offset]
+Vector2(78.18182, -435.6364)
+[locked]
+false
+
+[[1]]
+[value]
+@track
+@prompt
+You good?
+@response
+Fine { branch 3 }
+Could be better.. { branch 3 }
+[position_offset]
+Vector2(1093.182, -435.6364)
+[locked]
+false
+
+[[2]]
+[value]
+@track
+@prompt
+Not good, this place sucks. I'm dying to leave.
+@response
+Oh. { branch 1 }
+[position_offset]
+Vector2(508.1818, -227.0909)
+[locked]
+false
+
+[[3]]
+[value]
+@track
+@prompt
+As expected. You should also go mmove you know?
+@response
+...
+[position_offset]
+Vector2(1525.182, -365.6364)
+[locked]
+false
+
+[[data]]
+[display_name]
+Shirm
