@@ -76,6 +76,8 @@ position = Vector2(-386, 434)
 
 [node name="ChatArea" type="Area2D" parent="CharacterBody2D" unique_id=1758637223]
 script = ExtResource("4_1jyyf")
+npc_name = "Shirm"
+dialogue_lines = Array[String](["Hey...", "You good?"])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/ChatArea" unique_id=1059031139]
 shape = SubResource("CircleShape2D_eruj1")

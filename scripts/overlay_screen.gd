@@ -11,6 +11,12 @@ func _ready() -> void:
 	%BackPrompt.modulate = INVISIBLE_MODULATE
 	%SpeechBubble.visible = false
 	%SpeechBubble.modulate = INVISIBLE_MODULATE
+	
+	# Initialize dialogue UI if it exists
+	if has_node("%DialogueSpeaker"):
+		%DialogueSpeaker.text = ""
+	if has_node("%DialogueText"):
+		%DialogueText.text = ""
 
 func change_interact_visibility(new_visibility: bool) -> void:
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -27,3 +33,36 @@ func update_speech_bubble(new_text: String) -> void:
 	%SpeechBubble.visible = true if new_text else false
 	tween.tween_property(%SpeechBubble, "modulate", VISIBLE_MODULATE if new_text else INVISIBLE_MODULATE, 0.5)
 	%SpeechLabel.text = new_text
+	print("Updating Text")
+
+func update_dialogue_bubble(speaker: String, text: String) -> void:
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	
+	# Show dialogue bubble
+	%SpeechBubble.visible = true
+	
+	# Format and update the speech label
+	var display_text = text
+	if speaker:
+		display_text = speaker + ": " + text
+	%SpeechLabel.text = display_text
+	
+	# Also try individual speaker/text nodes if they exist
+	if has_node("%DialogueSpeaker"):
+		%DialogueSpeaker.text = speaker
+	if has_node("%DialogueText"):
+		%DialogueText.text = text
+	
+	# Fade in
+	tween.tween_property(%SpeechBubble, "modulate", VISIBLE_MODULATE, 0.3)
+
+func hide_dialogue_bubble() -> void:
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(%SpeechBubble, "modulate", INVISIBLE_MODULATE, 0.3)
+	await tween.finished
+	%SpeechBubble.visible = false
+	%SpeechLabel.text = ""
+	if has_node("%DialogueSpeaker"):
+		%DialogueSpeaker.text = ""
+	if has_node("%DialogueText"):
+		%DialogueText.text = ""

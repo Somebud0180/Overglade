@@ -13,6 +13,10 @@ var _camera_smoothing_timer: float = 0.0
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
+		# Skip interact if dialogue is active (let DialogueManager handle it)
+		if DialogueManager.is_in_dialogue():
+			return
+		
 		if is_in_land_area and current_land_area:
 			if current_land_area.has_method("interact"):
 				%Camera2D.position_smoothing_enabled = false
@@ -31,6 +35,12 @@ func _physics_process(delta: float) -> void:
 		_camera_smoothing_timer -= delta
 		if _camera_smoothing_timer <= 0:
 			%Camera2D.position_smoothing_enabled = true
+	
+	# Check if dialogue is active - if so, disable player movement
+	if DialogueManager.is_in_dialogue():
+		velocity = Vector2.ZERO
+		_update_sprite_on_velocity(velocity)
+		return
 	
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if input_direction:
@@ -107,14 +117,14 @@ func _get_closest_point_on_segment(point: Vector2, p1: Vector2, p2: Vector2) -> 
 	return p1 + t * edge
 
 func enter_area(new_area: Area2D) -> void:
-	if new_area is not land_area:
+	if new_area is not land_area and new_area is not chat_area:
 		return
 	
 	current_land_area = new_area
 	is_in_land_area = true
 
 func exit_area(new_area: Area2D) -> void:
-	if new_area is not land_area:
+	if new_area is not land_area and new_area is not chat_area:
 		return
 	
 	if current_land_area == new_area:
