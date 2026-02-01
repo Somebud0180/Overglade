@@ -61,6 +61,7 @@ func select_response(index: int) -> void:
 		return
 	
 	if index < 0 or index >= _current_responses.size():
+		print("return")
 		return
 	
 	_waiting_for_response = false
@@ -132,8 +133,7 @@ func _on_responses(items: Array[String]) -> void:
 	if overlay_scene:
 		# Hide the continue prompt when showing responses
 		if overlay_scene.has_node("%Prompt"):
-			print("Yeah")
-			overlay_scene.get_node("%Prompt").visible = false
+			overlay_scene.get_node("%Prompt").visible = items.size() < 2
 		
 		# Show response choices (keep the main dialogue bubble visible)
 		overlay_scene.show_responses(items)

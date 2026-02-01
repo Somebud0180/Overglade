@@ -1,6 +1,5 @@
 [[0]]
 [value]
-@track
 @prompt
 Hey...
 @response
@@ -13,7 +12,6 @@ false
 
 [[1]]
 [value]
-@track
 @prompt
 You good?
 @response
@@ -26,7 +24,6 @@ false
 
 [[2]]
 [value]
-@track
 @prompt
 Not good, this place sucks. I'm dying to leave.
 @response
@@ -38,9 +35,8 @@ false
 
 [[3]]
 [value]
-@track
 @prompt
-As expected. You should also go mmove you know?
+As expected. You should also go move you know?
 @response
 ...
 [position_offset]

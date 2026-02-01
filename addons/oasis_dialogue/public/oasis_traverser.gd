@@ -156,10 +156,6 @@ func next(response_index := 0) -> void:
 		_responded = true
 		_respond(response_index)
 
-	# Always filter responses so they're available
-	if _responses.size() == 0:
-		_responses = _filter_responses()
-
 	if _has_prompt():
 		prompted = true
 		prompt.emit(_next_prompt())
@@ -167,6 +163,7 @@ func next(response_index := 0) -> void:
 	if _has_prompt():
 		return
 
+	_responses = _filter_responses()
 	if _has_responses() and not _responded:
 		responses.emit(_translate_responses())
 	elif not prompted:
@@ -183,7 +180,17 @@ func _respond(response_index: int) -> void:
 				]
 		)
 		return
-	_action_handler.call(self, _responses[response_index].actions)
+	
+	# Check if response has any branch actions
+	var response = _responses[response_index]
+	var has_branch_action = response.actions.any(func(a: OasisKeyValue) -> bool: return a.key == "branch")
+	
+	# If response has no branch action, it implicitly ends the dialogue
+	if not has_branch_action:
+		# Don't call action handler - just mark that we need to finish
+		return
+	
+	_action_handler.call(self, response.actions)
 
 
 func _has_prompt() -> bool:

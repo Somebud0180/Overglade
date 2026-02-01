@@ -91,7 +91,13 @@
 		  "actions": []
 		}
 	  ],
-	  "responses": []
+	  "responses": [
+		{
+		  "key": "shirm_3_response_0",
+		  "conditions": [],
+		  "actions": []
+		}
+	]
 	}
   }
 }

@@ -171,6 +171,14 @@ func _load_character_dialogue(character: String) -> Dictionary[int, OasisBranch]
 	var file := _JsonFile.new()
 	var dir := DirAccess.open(json_path)
 	if dir:
+		# First try to load .oasis file (editor format)
+		var character_oasis_path := json_path.path_join("%s.oasis" % character)
+		if FileAccess.file_exists(character_oasis_path):
+			var oasis_data = _load_oasis_file(character_oasis_path)
+			if oasis_data:
+				return oasis_data
+		
+		# Fall back to .json file
 		var character_path := json_path.path_join("%s.json" % character)
 		if not FileAccess.file_exists(character_path):
 			push_error("Detected set path as a directory but %s does not exist. Returning null." % character_path)
@@ -203,6 +211,117 @@ func _load_character_dialogue(character: String) -> Dictionary[int, OasisBranch]
 		branches[id] = branch
 
 	return branches
+
+
+func _load_oasis_file(path: String) -> Dictionary[int, OasisBranch]:
+	var _OasisFile := preload("res://addons/oasis_dialogue/io/oasis_file.gd")
+	var oasis_file := _OasisFile.new()
+	var error = oasis_file.load(path)
+	if error != Error.OK:
+		push_error("Failed to load .oasis file: %s" % path)
+		return {}
+	
+	# Convert OasisFile format to OasisBranch format
+	var branches: Dictionary[int, OasisBranch] = {}
+	var sections = oasis_file.get_sections()
+	var character_name = "unknown"
+	
+	for section in sections:
+		# Skip non-branch sections and metadata
+		if section == "data":
+			character_name = oasis_file.get_value(section, "display_name", "unknown")
+			continue
+		
+		if not section.is_valid_int():
+			continue
+		
+		var branch_id = section.to_int()
+		var value = oasis_file.get_value(section, "value", "")
+		
+		# Parse the @prompt and @response sections
+		var prompts: Array[OasisLine] = []
+		var responses: Array[OasisLine] = []
+		
+		var lines = value.split("\n")
+		var current_section = "none"
+		var current_text = ""
+		var prompt_count = 0
+		var response_count = 0
+		
+		for i in range(lines.size()):
+			var line = lines[i].strip_edges()
+			
+			if line == "@prompt":
+				# Save previous section's content
+				if current_text != "" and current_section == "response":
+					var response_line = _create_response_line(current_text, branch_id, response_count, character_name)
+					if response_line:
+						responses.append(response_line)
+						response_count += 1
+					current_text = ""
+				current_section = "prompt"
+			elif line == "@response":
+				# Save previous section's content
+				if current_text != "" and current_section == "prompt":
+					var prompt_line = _create_prompt_line(current_text, branch_id, prompt_count, character_name)
+					if prompt_line:
+						prompts.append(prompt_line)
+						prompt_count += 1
+					current_text = ""
+				current_section = "response"
+			elif line.starts_with("@"):
+				# Other annotations - skip
+				pass
+			elif line != "":
+				if current_text != "":
+					current_text += "\n"
+				current_text += line
+		
+		# Add the last entry
+		if current_text != "":
+			if current_section == "prompt":
+				var prompt_line = _create_prompt_line(current_text, branch_id, prompt_count, character_name)
+				if prompt_line:
+					prompts.append(prompt_line)
+			elif current_section == "response":
+				var response_line = _create_response_line(current_text, branch_id, response_count, character_name)
+				if response_line:
+					responses.append(response_line)
+		
+		# Create the branch
+		var branch = OasisBranch.new([], prompts, responses)
+		branch.init_id(branch_id)
+		branches[branch_id] = branch
+	
+	return branches
+
+
+func _create_prompt_line(text: String, branch_id: int, index: int, character_name: String) -> OasisLine:
+	var line = OasisLine.new(
+		"%s_%d_prompt_%d" % [character_name, branch_id, index],
+		[],
+		[]
+	)
+	return line
+
+
+func _create_response_line(text: String, branch_id: int, index: int, character_name: String) -> OasisLine:
+	var actions: Array[OasisKeyValue] = []
+	
+	# Parse for branch action: "text { branch X }"
+	var regex = RegEx.new()
+	regex.compile(r"\{\s*branch\s+(\d+)\s*\}")
+	var match = regex.search(text)
+	if match:
+		var branch_target = int(match.get_string(1))
+		actions.append(OasisKeyValue.new("branch", branch_target))
+	
+	var line = OasisLine.new(
+		"%s_%d_response_%d" % [character_name, branch_id, index],
+		[],
+		actions
+	)
+	return line
 
 
 func _get_reachable_branches(branches: Dictionary[int, OasisBranch], root: int) -> Dictionary[int, OasisBranch]:
