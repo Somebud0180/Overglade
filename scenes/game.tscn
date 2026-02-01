@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://rqy4v6ps7qqa" path="res://textures/game/background.png" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://dnts6r51g2jqs" path="res://scripts/game.gd" id="1_p57ef"]
-[ext_resource type="PackedScene" uid="uid://bi3oeuqeffecc" path="res://scenes/chomp.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" path="res://scenes/chomp.tscn" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ci2yfdeva7u6f" path="res://textures/game/foreground0.png" id="2_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bor1ad8mv5ldj" path="res://textures/game/foreground1.png" id="3_tefeu"]
 [ext_resource type="Script" uid="uid://5r4arunnn30a" path="res://scripts/land_area.gd" id="4_iywne"]
@@ -68,10 +68,10 @@ area_name = "Old Town Park"
 polygon = PackedVector2Array(1584, -84, 2001, -89, 2083, -205, 1971, -259, 1507, -302, 1397, -291)
 
 [node name="Chomp" parent="." unique_id=1603336472 instance=ExtResource("2_0wfyh")]
-position = Vector2(-24, -196)
+position = Vector2(-933, -164)
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=598126680]
-position = Vector2(-21, -180)
+position = Vector2(-920, -180)
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1265348656]
 

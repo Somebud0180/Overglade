@@ -99,5 +99,23 @@
 		}
 	]
 	}
-  }
+  },
+  "hark": {
+		"0": {
+		  "prompts": [
+			{
+			  "key": "hark_0_prompt_0",
+			  "conditions": [],
+			  "actions": []
+			}
+		  ],
+		  "responses": [
+			{
+			  "key": "hark_0_response_0",
+			  "conditions": [],
+			  "actions": []
+			}
+		  ]
+		}
+	}
 }

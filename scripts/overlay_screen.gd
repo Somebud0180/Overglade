@@ -150,10 +150,21 @@ func hide_responses() -> void:
 	%ResponseMarginContainer.visible = false
 
 func _show_letter() -> void:
-	pass
+	if has_node("%Letter"):
+		var letter_node = %Letter
+		letter_node.visible = true
+		
+		# Get the OasisCharacter and start the dialogue
+		var oasis_character = %OasisCharacter
+		DialogueManager.start_dialogue(oasis_character)
+		DialogueManager.advance_dialogue()
+		_hide_letter()
 
 func _hide_letter() -> void:
-	pass
+	await DialogueManager.dialogue_ended
+	if has_node("%Letter"):
+		var letter_node = %Letter
+		letter_node.visible = false
 
 func _on_response1_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:

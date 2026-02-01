@@ -49,4 +49,3 @@ func start() -> OasisTraverser:
 
 func set_root(new_root: int) -> void:
 	root = new_root
-

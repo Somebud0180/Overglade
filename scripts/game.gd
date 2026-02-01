@@ -24,6 +24,8 @@ func _ready() -> void:
 	
 	if overlay_scene:
 		overlay_scene.visible = true
+		# Show the letter at game start
+		overlay_scene._show_letter()
 
 func load_map(scene: PackedScene, entry_position: Vector2 = Vector2.ZERO, boundary_name: String = "") -> void:
 	if not scene:
