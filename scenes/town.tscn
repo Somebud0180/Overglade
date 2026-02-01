@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://krgh0ltpevtp"]
+
+[ext_resource type="Texture2D" uid="uid://rqy4v6ps7qqa" path="res://textures/game/background.png" id="1_f2a5t"]
+[ext_resource type="Texture2D" uid="uid://bunncmud2u8y2" path="res://textures/game/town_foreground0.png" id="2_ms2es"]
+
+[node name="Town" type="Node2D" unique_id=276989691]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1013632904]
+repeat_size = Vector2(4096, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1304091133]
+texture = ExtResource("1_f2a5t")
+
+[node name="Foreground" type="Sprite2D" parent="." unique_id=10272116]
+texture = ExtResource("2_ms2es")
+
+[node name="Boundary" type="Area2D" parent="." unique_id=482617594]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Boundary" unique_id=1190385980]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(-2048, 857, 2048, 857, 2048, 319, 1858, 312, 1862, 406, 1369, 403, 1350, 249, 1133, 218, 1124, 391, 500, 381, 465, 193, 289, 221, 299, 428, -107, 384, -78, 177, -251, 212, -248, 378, -652, 389, -634, 164, -1024, 171, -847, 372, -1410, 399, -1441, 216, -1593, 220, -1593, 403, -1862, 413, -1876, 268, -2048, 323)
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1205163136]
+position = Vector2(97, 687)

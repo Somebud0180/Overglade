@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://b6rv2pk1fo82n"]
+
+[ext_resource type="Texture2D" uid="uid://rqy4v6ps7qqa" path="res://textures/game/background.png" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://dnts6r51g2jqs" path="res://scripts/game.gd" id="1_p57ef"]
+[ext_resource type="PackedScene" uid="uid://bi3oeuqeffecc" path="res://scenes/chomp.tscn" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://ci2yfdeva7u6f" path="res://textures/game/foreground0.png" id="2_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://bor1ad8mv5ldj" path="res://textures/game/foreground1.png" id="3_tefeu"]
+[ext_resource type="Script" uid="uid://5r4arunnn30a" path="res://scripts/land_area.gd" id="4_iywne"]
+[ext_resource type="PackedScene" uid="uid://krgh0ltpevtp" path="res://scenes/town.tscn" id="6_u5sy4"]
+
+[node name="Game" type="Node2D" unique_id=1315257967]
+script = ExtResource("1_p57ef")
+
+[node name="Background" type="Parallax2D" parent="." unique_id=950655406]
+repeat_size = Vector2(4096, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=1056941838]
+texture = ExtResource("1_jyhfs")
+
+[node name="Map" type="Node2D" parent="." unique_id=2017906234]
+
+[node name="Foreground0" type="Sprite2D" parent="Map" unique_id=2050506933]
+position = Vector2(99, -224)
+texture = ExtResource("2_tbgi4")
+
+[node name="Foreground1" type="Sprite2D" parent="Map" unique_id=625681404]
+z_index = 1
+position = Vector2(99, -224)
+texture = ExtResource("3_tefeu")
+
+[node name="BoundaryNP" type="Area2D" parent="Map" unique_id=1212120315]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/BoundaryNP" unique_id=347381648]
+polygon = PackedVector2Array(-1490, -80, -1466, -58, -976, -82, -951, -38, -221, -77, -134, -40, 279, -79, 818, -111, 976, -73, 1264, -109, 1509, -105, 1347, -283, 1046, -258, 762, -308, 441.3139, -270.67145, 384, -264, 292, -279, 240, -281, 240, -225, 75, -224, 70, -196, -661, -214, -678, -276, -810, -259, -851, -294, -1317, -253, -1400, -308, -1773, -281, -1842, -202, -1634, -75)
+
+[node name="BoundaryP" type="Area2D" parent="Map" unique_id=1374608578]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/BoundaryP" unique_id=1830982322]
+polygon = PackedVector2Array(-1490, -80, -1466, -58, -976, -82, -951, -38, -221, -77, -134, -40, 279, -79, 818, -111, 976, -73, 1268, -110, 2000, -91, 2000, -91, 2086, -208, 1962, -243, 1703, -270, 1507, -296, 1046, -258, 762, -308, 384, -264, 292, -279, 240, -281, 240, -225, 75, -224, 70, -196, -661, -214, -678, -276, -810, -259, -851, -294, -1317, -253, -1400, -308, -1773, -281, -1842, -202, -1634, -75)
+
+[node name="Grassland" type="Area2D" parent="Map" unique_id=2050722632]
+script = ExtResource("4_iywne")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/Grassland" unique_id=1757851251]
+polygon = PackedVector2Array(-1248, -65, -1147, -266, -1427, -318, -1803, -292, -1858, -204, -1653, -61)
+
+[node name="Town" type="Area2D" parent="Map" unique_id=584707580]
+script = ExtResource("4_iywne")
+destination_scene = ExtResource("6_u5sy4")
+boundary_name = "Boundary"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/Town" unique_id=814207807]
+polygon = PackedVector2Array(374, -84, 241, -280, -684, -278, -716, -51, -215, -75, -129, -38)
+
+[node name="Park" type="Area2D" parent="Map" unique_id=1487834178]
+script = ExtResource("4_iywne")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/Park" unique_id=547148344]
+polygon = PackedVector2Array(1584, -84, 2001, -89, 2083, -205, 1971, -259, 1507, -302, 1397, -291)
+
+[node name="Chomp" parent="." unique_id=1603336472 instance=ExtResource("2_0wfyh")]
+position = Vector2(-24, -196)
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=598126680]
+position = Vector2(-21, -180)

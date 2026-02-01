@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bi3oeuqeffecc"]
+
+[ext_resource type="Texture2D" uid="uid://0sghdi6251pi" path="res://textures/game/character_sheet.png" id="1_ejpq6"]
+[ext_resource type="Script" uid="uid://cdrfdo6nupu78" path="res://scripts/chomp.gd" id="1_prpov"]
+[ext_resource type="PackedScene" uid="uid://54aqamyocrl7" path="res://scenes/overlay.tscn" id="3_qld53"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prpov"]
+atlas = ExtResource("1_ejpq6")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qld53"]
+atlas = ExtResource("1_ejpq6")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hw6lk"]
+atlas = ExtResource("1_ejpq6")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0j0wp"]
+atlas = ExtResource("1_ejpq6")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ja7cw"]
+atlas = ExtResource("1_ejpq6")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtd3i"]
+atlas = ExtResource("1_ejpq6")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xq3ha"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prpov")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qld53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hw6lk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0j0wp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ja7cw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtd3i")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_prpov"]
+
+[node name="Chomp" type="CharacterBody2D" unique_id=1603336472]
+motion_mode = 1
+script = ExtResource("1_prpov")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=609261541]
+sprite_frames = SubResource("SpriteFrames_xq3ha")
+animation = &"walk"
+frame_progress = 0.64977187
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=923460503]
+position = Vector2(0, 12)
+shape = SubResource("CapsuleShape2D_prpov")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1741445491]
+limit_left = -2048
+limit_right = 2048
+position_smoothing_enabled = true
+
+[node name="Overlay" parent="." unique_id=1150663332 instance=ExtResource("3_qld53")]
+offset_left = -540.0
+offset_top = -360.0
+offset_right = 540.0
+offset_bottom = 360.0
+metadata/_edit_use_anchors_ = true
