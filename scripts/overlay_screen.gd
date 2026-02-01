@@ -13,6 +13,10 @@ func _ready() -> void:
 	%BackPrompt.modulate = INVISIBLE_MODULATE
 	%SpeechBubble.visible = false
 	%SpeechBubble.modulate = INVISIBLE_MODULATE
+	%GradientBackground.visible = false
+	%GradientBackground.modulate = INVISIBLE_MODULATE
+	%AreaLabel.visible = false
+	%AreaLabel.modulate = INVISIBLE_MODULATE
 	
 	# Hide continue prompt initially
 	if has_node("%Prompt"):
@@ -123,7 +127,11 @@ func show_responses(responses: Array[String]) -> void:
 		%Response1.visible = true
 		var label = %Response1.get_node("SpeechLabel")
 		if label:
-			label.text = "[Q] " + responses[0]
+			# Don't show key prefix for single response
+			if responses.size() == 1:
+				label.text = responses[0]
+			else:
+				label.text = "[Q] " + responses[0]
 	else:
 		if has_node("%Response1"):
 			%Response1.visible = false
@@ -157,7 +165,6 @@ func _show_letter() -> void:
 		# Get the OasisCharacter and start the dialogue
 		var oasis_character = %OasisCharacter
 		DialogueManager.start_dialogue(oasis_character)
-		DialogueManager.advance_dialogue()
 		_hide_letter()
 
 func _hide_letter() -> void:

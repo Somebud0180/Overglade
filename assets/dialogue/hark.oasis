@@ -2,14 +2,142 @@
 [value]
 @prompt
 Hi, its been awhile since we met.
+@response
+. { branch 1 }
+[position_offset]
+Vector2(786.244, -425.7404)
+[locked]
+false
+
+[[1]]
+[value]
+@prompt
 I've been meaning to meet again, but I'm busy thinking of moving away right now.
+@response
+. { branch 2 }
+[position_offset]
+Vector2(1259.667, -400.3031)
+[locked]
+false
+
+[[2]]
+[value]
+@prompt
+I've been meaning to meet again, but I'm busy thinking of moving away right now.
+@response
+. { branch 3 }
+[position_offset]
+Vector2(2171.667, -400.3031)
+[locked]
+false
+
+[[3]]
+[value]
+@prompt
 You should also consider moving with me, Otty Town has the best places around.
+@response
+. { branch 4 }
+[position_offset]
+Vector2(3083.667, -402.0777)
+[locked]
+false
+
+[[4]]
+[value]
+@prompt
 Anyway unless something new opens in town, I guess we'll just talk again later.
+@response
+. { branch 5 }
+[position_offset]
+Vector2(3976.667, -402.0777)
+[locked]
+false
+
+[[5]]
+[value]
+@prompt
 See you soon! - Hark
 @response
 Continue
 [position_offset]
-Vector2(45.33333, -102.3031)
+Vector2(4878.668, -402.0777)
+[locked]
+false
+
+[[6]]
+[value]
+@prompt
+Hey what's up?
+@response
+Hey { branch 7 }
+[position_offset]
+Vector2(789.5253, -169.7989)
+[locked]
+false
+
+[[7]]
+[value]
+@prompt
+So..?
+@response
+I just realized something { branch 8 }
+[position_offset]
+Vector2(1250.525, -127.7989)
+[locked]
+false
+
+[[8]]
+[value]
+@prompt
+..
+@response
+We have everyting we need in Old Town { branch 9 }
+[position_offset]
+Vector2(1700.961, -124.8416)
+[locked]
+false
+
+[[9]]
+[value]
+@prompt
+But what about the-
+@response
+We don't need those, life in Old Town is all we need. Otty got you in strings, don't fall for it. { branch 10 }
+[position_offset]
+Vector2(2324.229, -130.1174)
+[locked]
+false
+
+[[10]]
+[value]
+@prompt
+.
+@response
+Come meet me at the park, i'll show you something { branch 11 }
+[position_offset]
+Vector2(3533.229, -130.1174)
+[locked]
+false
+
+[[11]]
+[value]
+@prompt
+.
+@response
+. { branch 12 }
+[position_offset]
+Vector2(4231.342, -128.3427)
+[locked]
+false
+
+[[12]]
+[value]
+@prompt
+You're right, Old Town is all I needed.
+@response
+End
+[position_offset]
+Vector2(4672.581, -133.6667)
 [locked]
 false
 

@@ -3,6 +3,7 @@ class_name chat_area
 
 @export var area_name: String = ""
 @export var npc_name: String = "NPC"
+@export var dialogue_root: int = 0
 
 var overlay_scene: overlay_screen = null
 var _oasis_character: OasisCharacter = null
@@ -14,7 +15,7 @@ func _ready() -> void:
 	# Create OasisCharacter for this NPC
 	_oasis_character = OasisCharacter.new()
 	_oasis_character.character = npc_name.to_lower()
-	_oasis_character.root = 0
+	_oasis_character.root = dialogue_root
 	add_child(_oasis_character)
 	print("Chat area ready. OasisCharacter created for: %s" % npc_name)
 	

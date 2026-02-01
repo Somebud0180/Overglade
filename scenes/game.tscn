@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cpygu3iyokoql" path="res://scripts/boundary.gd" id="5_gee14"]
 [ext_resource type="PackedScene" uid="uid://54aqamyocrl7" path="res://scenes/overlay_screen.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://krgh0ltpevtp" path="res://scenes/town.tscn" id="6_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://bkeshko4hkfeu" path="res://scenes/park.tscn" id="8_kvpfn"]
 [ext_resource type="Script" uid="uid://cff7qh8hd8pyb" path="res://scripts/loading_screen.gd" id="10_vtaks"]
 
 [node name="Game" type="Node2D" unique_id=1315257967 groups=["Game"]]
@@ -32,19 +33,20 @@ position = Vector2(99, -224)
 texture = ExtResource("3_tefeu")
 
 [node name="BoundaryNP" type="Area2D" parent="Map" unique_id=1212120315]
+visible = false
 script = ExtResource("5_gee14")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/BoundaryNP" unique_id=347381648]
 polygon = PackedVector2Array(-1490, -80, -1466, -58, -976, -82, -951, -38, -221, -77, -134, -40, 279, -79, 818, -111, 976, -73, 1264, -109, 1509, -105, 1347, -283, 1046, -258, 762, -308, 441.3139, -270.67145, 384, -264, 292, -279, 240, -281, 240, -225, 75, -224, 70, -196, -661, -214, -678, -276, -810, -259, -851, -294, -1317, -253, -1400, -308, -1773, -281, -1842, -202, -1634, -75)
 
 [node name="BoundaryP" type="Area2D" parent="Map" unique_id=1374608578]
-visible = false
 script = ExtResource("5_gee14")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/BoundaryP" unique_id=1830982322]
 polygon = PackedVector2Array(-1490, -80, -1466, -58, -976, -82, -951, -38, -221, -77, -134, -40, 279, -79, 818, -111, 976, -73, 1268, -110, 2000, -91, 2000, -91, 2086, -208, 1962, -243, 1703, -270, 1507, -296, 1046, -258, 762, -308, 384, -264, 292, -279, 240, -281, 240, -225, 75, -224, 70, -196, -661, -214, -678, -276, -810, -259, -851, -294, -1317, -253, -1400, -308, -1773, -281, -1842, -202, -1634, -75)
 
 [node name="Grassland" type="Area2D" parent="Map" unique_id=2050722632]
+visible = false
 script = ExtResource("4_iywne")
 area_name = "Grasslands"
 
@@ -63,6 +65,7 @@ polygon = PackedVector2Array(374, -84, 241, -280, -684, -278, -716, -51, -215, -
 [node name="Park" type="Area2D" parent="Map" unique_id=1487834178]
 script = ExtResource("4_iywne")
 area_name = "Old Town Park"
+destination_scene = ExtResource("8_kvpfn")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map/Park" unique_id=547148344]
 polygon = PackedVector2Array(1584, -84, 2001, -89, 2083, -205, 1971, -259, 1507, -302, 1397, -291)

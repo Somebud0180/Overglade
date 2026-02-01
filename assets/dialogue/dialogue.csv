@@ -10,8 +10,28 @@ shirm_2_response_0,Oh.
 shirm_3_prompt_0,As expected. You should also go move you know?
 shirm_3_response_0,...
 hark_0_prompt_0,Hi, its been awhile since we met.
-I've been meaning to meet again, but I'm busy thinking of moving away right now.
-You should also consider moving with me, Otty Town has the best places around.
-Anyway unless something new opens in town, I guess we'll just talk again later.
-See you soon! - Hark
-hark_0_response_0,Continue
+hark_0_response_0,.
+hark_1_prompt_0,I've been meaning to meet again, but I'm busy thinking of moving away right now.
+hark_1_response_0,.
+hark_2_prompt_0,You should also consider moving with me, Otty Town has the best places around.
+hark_2_response_0,.
+hark_3_prompt_0,Anyway unless something new opens in town, I guess we'll just talk again later.
+hark_3_response_0,.
+hark_4_prompt_0,Anyway unless something new opens in town, I guess we'll just talk again later.
+hark_4_response_0,.
+hark_5_prompt_0,See you soon! - Hark
+hark_5_response_0,Continue
+hark_6_prompt_0,Hey what's up?
+hark_6_response_0,Hey
+hark_7_prompt_0,So..?
+hark_7_response_0,I just realized something
+hark_8_prompt_0,..
+hark_8_response_0,We have everyting we need in Old Town
+hark_9_prompt_0,But what about the-
+hark_9_response_0,We don't need those, life in Old Town is all we need. Otty got you in strings, don't fall for it.
+hark_10_prompt_0,.
+hark_10_response_0,Come meet me at the park, i'll show you something
+hark_11_prompt_0,.
+hark_11_response_0,.
+hark_12_prompt_0,You're right, Old Town is all I needed.
+hark_12_response_0,End

@@ -5,43 +5,38 @@
 [ext_resource type="Script" uid="uid://cpygu3iyokoql" path="res://scripts/boundary.gd" id="3_eruj1"]
 [ext_resource type="Texture2D" uid="uid://0sghdi6251pi" path="res://textures/game/character_sheet.png" id="3_ms2es"]
 [ext_resource type="Script" uid="uid://3cr5eqhi2sbw" path="res://scripts/chat_area.gd" id="4_1jyyf"]
-[ext_resource type="Script" uid="uid://b8fo0vqrq63n2" path="res://addons/oasis_dialogue/public/oasis_character.gd" id="6_t6cq8"]
 [ext_resource type="Script" uid="uid://q08fswkl0eae" path="res://scripts/oasis_manager.gd" id="7_cq4yp"]
 [ext_resource type="Script" uid="uid://4tygemljsgbp" path="res://scripts/traverser_controller.gd" id="8_yn4qk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eruj1"]
 radius = 64.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eruj1"]
-atlas = ExtResource("3_ms2es")
-region = Rect2(0, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1jyyf"]
-atlas = ExtResource("3_ms2es")
-region = Rect2(48, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t6cq8"]
-atlas = ExtResource("3_ms2es")
-region = Rect2(96, 48, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_cq4yp"]
 atlas = ExtResource("3_ms2es")
-region = Rect2(48, 48, 48, 48)
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yn4qk"]
+atlas = ExtResource("3_ms2es")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3ani"]
+atlas = ExtResource("3_ms2es")
+region = Rect2(96, 96, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cq4yp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eruj1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1jyyf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t6cq8")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_cq4yp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yn4qk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3ani")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yn4qk")
 }],
 "loop": true,
 "name": &"default",
@@ -73,12 +68,6 @@ polygon = PackedVector2Array(-2048, 857, 2048, 857, 2048, 319, 1858, 312, 1862, 
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1205163136]
 position = Vector2(97, 687)
-
-[node name="OasisCharacter" type="Node" parent="." unique_id=374244765 node_paths=PackedStringArray("manager")]
-script = ExtResource("6_t6cq8")
-manager = NodePath("../OasisManager")
-character = "Shirm"
-metadata/_custom_type_script = "uid://b8fo0vqrq63n2"
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=751031599]
 position = Vector2(-386, 434)

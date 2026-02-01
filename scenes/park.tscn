@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bkeshko4hkfeu"]
+
+[ext_resource type="Texture2D" uid="uid://rqy4v6ps7qqa" path="res://textures/game/background.png" id="1_v6yfi"]
+[ext_resource type="Texture2D" uid="uid://baj1is1nnnukt" path="res://textures/game/park_foreground0.png" id="2_v6yfi"]
+[ext_resource type="Script" uid="uid://cpygu3iyokoql" path="res://scripts/boundary.gd" id="3_cowak"]
+[ext_resource type="Script" uid="uid://3cr5eqhi2sbw" path="res://scripts/chat_area.gd" id="4_j6gsg"]
+[ext_resource type="Script" uid="uid://q08fswkl0eae" path="res://scripts/oasis_manager.gd" id="6_mrh1q"]
+[ext_resource type="Script" uid="uid://4tygemljsgbp" path="res://scripts/traverser_controller.gd" id="7_ejoub"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbwbv"]
+size = Vector2(720, 440)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tiu4o"]
+radius = 16.0
+height = 48.0
+
+[node name="Park" type="Node2D" unique_id=1448059962]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=21037611]
+repeat_size = Vector2(4096, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1834145689]
+position = Vector2(-23, 127)
+texture = ExtResource("1_v6yfi")
+
+[node name="Foreground" type="Sprite2D" parent="." unique_id=230542847]
+texture = ExtResource("2_v6yfi")
+
+[node name="Boundary" type="Area2D" parent="." unique_id=781758920]
+script = ExtResource("3_cowak")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Boundary" unique_id=1972920062]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(-2043, 838, 2031, 845, 2031, 306, 1048, 185, 680, 204, 676, 409, 478, 412, 524, 169, -312, 204, -927, 158, -961, 412, -1090, 390, -1083, 177, -1496, 211, -1504, 542, -1728, 523, -1732, 238, -2036, 321)
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1615059826]
+position = Vector2(-1058, 692)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1698709418]
+position = Vector2(-128, 540)
+
+[node name="ChatArea" type="Area2D" parent="CharacterBody2D" unique_id=701440528]
+script = ExtResource("4_j6gsg")
+npc_name = "Hark"
+dialogue_root = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/ChatArea" unique_id=117898739]
+shape = SubResource("RectangleShape2D_qbwbv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=333872622]
+shape = SubResource("CapsuleShape2D_tiu4o")
+disabled = true
+
+[node name="OasisManager" type="Node" parent="." unique_id=2024668503 node_paths=PackedStringArray("track_controller")]
+script = ExtResource("6_mrh1q")
+track_controller = NodePath("TraverserController")
+json_path = "res://assets/dialogue/dialogue.json"
+
+[node name="TraverserController" type="Node" parent="OasisManager" unique_id=1755461492]
+script = ExtResource("7_ejoub")

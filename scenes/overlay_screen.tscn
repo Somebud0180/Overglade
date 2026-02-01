@@ -59,7 +59,7 @@ grow_vertical = 2
 theme = ExtResource("1_r2eog")
 script = ExtResource("2_p5j10")
 
-[node name="Control" type="Control" parent="." unique_id=400951741]
+[node name="Area" type="Control" parent="." unique_id=400951741]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,7 +67,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GradientBackground" type="TextureRect" parent="Control" unique_id=1358844724]
+[node name="GradientBackground" type="TextureRect" parent="Area" unique_id=1358844724]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
@@ -78,7 +78,7 @@ texture = ExtResource("9_05qsj")
 expand_mode = 5
 stretch_mode = 3
 
-[node name="AreaLabel" type="Label" parent="Control" unique_id=1368313373]
+[node name="AreaLabel" type="Label" parent="Area" unique_id=1368313373]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -115,7 +115,7 @@ color = Color(0, 0, 0, 1)
 unique_name_in_owner = true
 script = ExtResource("5_rc4e3")
 manager = NodePath("../OasisManager")
-character = "Hark"
+character = "hark"
 metadata/_custom_type_script = "uid://b8fo0vqrq63n2"
 
 [node name="OasisManager" type="Node" parent="Letter" unique_id=1615903884 node_paths=PackedStringArray("track_controller")]

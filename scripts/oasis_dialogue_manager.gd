@@ -29,15 +29,29 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if _waiting_for_response:
-		# Handle response selection
-		if event.is_action_pressed("response_one") and _current_responses.size() >= 1:
-			select_response(0)
-			get_tree().get_root().set_input_as_handled()
-			return
-		elif event.is_action_pressed("response_two") and _current_responses.size() >= 2:
-			select_response(1)
-			get_tree().get_root().set_input_as_handled()
-			return
+		# If there's only one response, allow any key/mouse press to select it
+		if _current_responses.size() == 1:
+			var should_select = false
+			if event is InputEventMouseButton and event.pressed:
+				should_select = true
+			elif event is InputEventKey and event.pressed and not event.echo:
+				should_select = true
+			
+			if should_select:
+				select_response(0)
+				get_tree().get_root().set_input_as_handled()
+				_ignore_input_until_release = true
+				return
+		else:
+			# Handle response selection for multiple responses
+			if event.is_action_pressed("response_one") and _current_responses.size() >= 1:
+				select_response(0)
+				get_tree().get_root().set_input_as_handled()
+				return
+			elif event.is_action_pressed("response_two") and _current_responses.size() >= 2:
+				select_response(1)
+				get_tree().get_root().set_input_as_handled()
+				return
 	else:
 		# Accept any mouse button press or any key press to advance dialogue
 		var should_advance = false
@@ -111,6 +125,8 @@ func start_dialogue(character: OasisCharacter) -> void:
 	current_traverser.prompt.connect(_on_prompt)
 	current_traverser.responses.connect(_on_responses)
 	current_traverser.finished.connect(_on_finished)
+	
+	advance_dialogue()
 
 func _on_prompt(text: String) -> void:
 	if overlay_scene:
