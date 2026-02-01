@@ -1,6 +1,7 @@
 extends Area2D
 class_name chat_area
 
+@export var area_name: String = ""
 @export var npc_name: String = "NPC"
 @export var dialogue_lines: Array[String] = []
 
@@ -30,6 +31,8 @@ func _on_body_entered(body: Node) -> void:
 		body.enter_area(self)
 		if overlay_scene:
 			overlay_scene.change_interact_visibility(true)
+			if area_name:
+				overlay_scene.show_area_name(area_name)
 			print("Interact visibility set to true")
 		else:
 			print("ERROR: overlay_scene is null!")
@@ -41,6 +44,7 @@ func _on_body_exited(body: Node) -> void:
 		body.exit_area(self)
 		if overlay_scene:
 			overlay_scene.change_interact_visibility(false)
+			overlay_scene.hide_area_name()
 
 func interact() -> void:
 	if not _dialogue:

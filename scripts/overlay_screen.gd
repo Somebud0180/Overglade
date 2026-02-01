@@ -66,3 +66,21 @@ func hide_dialogue_bubble() -> void:
 		%DialogueSpeaker.text = ""
 	if has_node("%DialogueText"):
 		%DialogueText.text = ""
+
+func show_area_name(name_text: String) -> void:
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	%AreaLabel.visible = true
+	%GradientBackground.visible = true
+	%AreaLabel.text = name_text
+	# Fade in label and gradient
+	tween.tween_property(%AreaLabel, "modulate", VISIBLE_MODULATE, 0.3)
+	get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC).tween_property(%GradientBackground, "modulate", Color(1.0, 1.0, 1.0, 0.5), 0.3)
+
+func hide_area_name() -> void:
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(%AreaLabel, "modulate", INVISIBLE_MODULATE, 0.3)
+	get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC).tween_property(%GradientBackground, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.3)
+	await tween.finished
+	%AreaLabel.visible = false
+	%GradientBackground.visible = false
+	%AreaLabel.text = ""

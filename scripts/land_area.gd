@@ -1,6 +1,7 @@
 extends Area2D
 class_name land_area
 
+@export var area_name: String = ""
 @export var destination_scene: PackedScene
 @export var destination_name: String
 @export var entry_position: Vector2 = Vector2(640, 360)  # Default center position
@@ -35,9 +36,12 @@ func _on_body_entered(body: Node) -> void:
 		body.enter_area(self)
 		if overlay_scene:
 			overlay_scene.change_interact_visibility(true)
+			if area_name:
+				overlay_scene.show_area_name(area_name)
 
 func _on_body_exited(body: Node) -> void:
 	if body is player:
 		body.exit_area(self)
 		if overlay_scene:
 			overlay_scene.change_interact_visibility(false)
+			overlay_scene.hide_area_name()

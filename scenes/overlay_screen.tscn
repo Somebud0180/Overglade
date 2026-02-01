@@ -35,6 +35,17 @@ grow_vertical = 2
 theme = ExtResource("1_r2eog")
 script = ExtResource("2_p5j10")
 
+[node name="GradientBackground" type="TextureRect" parent="." unique_id=1358844724]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 270.0
+grow_horizontal = 2
+texture = ExtResource("9_05qsj")
+expand_mode = 5
+stretch_mode = 3
+
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1627985921]
 layout_mode = 1
 anchors_preset = 15
@@ -95,18 +106,10 @@ grow_vertical = 2
 text = "Yay"
 label_settings = SubResource("LabelSettings_lhcu8")
 
-[node name="Label" type="Label" parent="MarginContainer" unique_id=1368313373]
+[node name="AreaLabel" type="Label" parent="MarginContainer" unique_id=1368313373]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 text = "Old Town"
 label_settings = SubResource("LabelSettings_rc4e3")
 horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1358844724]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-texture = ExtResource("9_05qsj")
-expand_mode = 5
-stretch_mode = 3
