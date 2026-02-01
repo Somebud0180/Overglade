@@ -72,9 +72,9 @@ position = Vector2(-21, -180)
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1265348656]
 
-[node name="OverlayScreen" parent="Interface" unique_id=1150663332 instance=ExtResource("5_tbgi4")]
+[node name="OverlayScreen" parent="Interface" unique_id=1150663332 groups=["OverlayScreen"] instance=ExtResource("5_tbgi4")]
 
-[node name="LoadingScreen" type="Control" parent="Interface" unique_id=1328725834]
+[node name="LoadingScreen" type="Control" parent="Interface" unique_id=1328725834 groups=["LoadingScreen"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

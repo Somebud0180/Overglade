@@ -24,8 +24,10 @@ window/stretch/aspect="expand"
 
 [global_group]
 
-Overlay=""
 Player=""
+LoadingScreen=""
+Game=""
+OverlayScreen=""
 
 [input]
 

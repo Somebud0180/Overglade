@@ -2,14 +2,16 @@ extends Node2D
 
 var current_map: Node2D = null
 var player_node: player = null
-var overlay_scene: overlay = null
+var overlay_scene: overlay_screen = null
+var loading_scene: loading_screen = null
 var return_position: Vector2 = Vector2.ZERO
 var previous_map: Node2D = null
 
 func _ready() -> void:
 	# Cache references to essential nodes
 	player_node = get_node_or_null("Chomp")
-	overlay_scene = get_tree().get_first_node_in_group("Overlay")
+	overlay_scene = get_tree().get_first_node_in_group("OverlayScreen")
+	loading_scene = get_tree().get_first_node_in_group("LoadingScreen")
 	current_map = get_node_or_null("Map")
 	
 	if player_node:
@@ -27,6 +29,15 @@ func load_map(scene: PackedScene, entry_position: Vector2 = Vector2.ZERO, bounda
 	if not scene:
 		return
 	
+	# Use fade transition if loading screen is available
+	if loading_scene:
+		await loading_scene.fade_transition(func():
+			_perform_map_load(scene, entry_position, boundary_name)
+		)
+	else:
+		_perform_map_load(scene, entry_position, boundary_name)
+
+func _perform_map_load(scene: PackedScene, entry_position: Vector2, boundary_name: String) -> void:
 	# Store return information and hide current map
 	if current_map and player_node:
 		return_position = player_node.global_position
@@ -57,6 +68,15 @@ func return_to_previous_map() -> void:
 	if not previous_map:
 		return
 	
+	# Use fade transition if loading screen is available
+	if loading_scene:
+		await loading_scene.fade_transition(func():
+			_perform_return_to_previous_map()
+		)
+	else:
+		_perform_return_to_previous_map()
+
+func _perform_return_to_previous_map() -> void:
 	# Remove current map
 	if current_map:
 		remove_child(current_map)

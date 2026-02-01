@@ -1,5 +1,5 @@
 extends Control
-class_name  overlay
+class_name  overlay_screen
 
 const VISIBLE_MODULATE = Color(1.0, 1.0, 1.0, 1.0)
 const INVISIBLE_MODULATE =Color(1.0, 1.0, 1.0, 0)

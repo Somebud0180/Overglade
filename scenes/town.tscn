@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bunncmud2u8y2" path="res://textures/game/town_foreground0.png" id="2_ms2es"]
 [ext_resource type="Script" uid="uid://cpygu3iyokoql" path="res://scripts/boundary.gd" id="3_eruj1"]
 [ext_resource type="Texture2D" uid="uid://0sghdi6251pi" path="res://textures/game/character_sheet.png" id="3_ms2es"]
+[ext_resource type="Script" uid="uid://3cr5eqhi2sbw" path="res://scripts/chat_area.gd" id="4_1jyyf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eruj1"]
 radius = 64.0
@@ -73,9 +74,10 @@ position = Vector2(97, 687)
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=751031599]
 position = Vector2(-386, 434)
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=1758637223]
+[node name="ChatArea" type="Area2D" parent="CharacterBody2D" unique_id=1758637223]
+script = ExtResource("4_1jyyf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1059031139]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/ChatArea" unique_id=1059031139]
 shape = SubResource("CircleShape2D_eruj1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1956718157]

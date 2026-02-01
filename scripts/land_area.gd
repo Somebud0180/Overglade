@@ -5,10 +5,10 @@ class_name land_area
 @export var destination_name: String
 @export var entry_position: Vector2 = Vector2(640, 360)  # Default center position
 @export var boundary_name: String = ""  # Name of boundary node to use (e.g., "BoundaryNP", "BoundaryP", or "Area2D")
-var overlay_scene: overlay
+var overlay_scene: overlay_screen
 
 func _ready() -> void:
-	overlay_scene = get_tree().get_first_node_in_group("Overlay")
+	overlay_scene = get_tree().get_first_node_in_group("OverlayScreen")
 	connect("body_entered", _on_body_entered)
 	connect("body_exited", _on_body_exited)
 
