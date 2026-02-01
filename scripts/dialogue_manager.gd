@@ -14,7 +14,17 @@ func _ready() -> void:
 	set_process_input(true)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and is_dialogue_active and current_dialogue:
+	if not is_dialogue_active or not current_dialogue:
+		return
+	
+	# Accept any mouse button press or any key press
+	var should_advance = false
+	if event is InputEventMouseButton and event.pressed:
+		should_advance = true
+	elif event is InputEventKey and event.pressed and not event.echo:
+		should_advance = true
+	
+	if should_advance:
 		if not current_dialogue.advance():
 			end_dialogue()
 		else:
@@ -29,6 +39,12 @@ func start_dialogue(dialogue_to_start: dialogue) -> void:
 	current_dialogue.start()
 	is_dialogue_active = true
 	dialogue_started.emit()
+	
+	# Hide prompts when dialogue starts
+	if overlay_scene:
+		overlay_scene.change_interact_visibility(false)
+		overlay_scene.change_back_visibility(false)
+	
 	_display_current_line()
 
 func _display_current_line() -> void:
@@ -44,6 +60,8 @@ func end_dialogue() -> void:
 	dialogue_ended.emit()
 	if overlay_scene:
 		overlay_scene.hide_dialogue_bubble()
+		# Restore back prompt visibility after dialogue
+		overlay_scene.change_back_visibility(true)
 
 func is_in_dialogue() -> bool:
 	return is_dialogue_active

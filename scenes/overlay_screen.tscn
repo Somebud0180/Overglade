@@ -10,6 +10,16 @@
 [ext_resource type="FontFile" uid="uid://cvg7xg5lalb57" path="res://assets/PlaypenSans_Bundle/Variable/PlaypenSans[wght].ttf" id="8_lhcu8"]
 [ext_resource type="Texture2D" uid="uid://coegbrbnljs1e" path="res://textures/interface/gradient.png" id="9_05qsj"]
 
+[sub_resource type="FontVariation" id="FontVariation_ikji4"]
+base_font = ExtResource("8_lhcu8")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_rc4e3"]
+font = SubResource("FontVariation_ikji4")
+font_size = 32
+
 [sub_resource type="FontVariation" id="FontVariation_cpe4y"]
 base_font = ExtResource("8_lhcu8")
 
@@ -18,12 +28,15 @@ font = SubResource("FontVariation_cpe4y")
 font_size = 32
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="FontVariation" id="FontVariation_ikji4"]
+[sub_resource type="FontVariation" id="FontVariation_05qsj"]
 base_font = ExtResource("8_lhcu8")
+variation_opentype = {
+2003265652: 300
+}
 
-[sub_resource type="LabelSettings" id="LabelSettings_rc4e3"]
-font = SubResource("FontVariation_ikji4")
-font_size = 44
+[sub_resource type="LabelSettings" id="LabelSettings_ikji4"]
+font = SubResource("FontVariation_05qsj")
+font_color = Color(0, 0, 0, 1)
 
 [node name="Overlay" type="Control" unique_id=1150663332 groups=["OverlayScreen"]]
 layout_mode = 3
@@ -35,7 +48,15 @@ grow_vertical = 2
 theme = ExtResource("1_r2eog")
 script = ExtResource("2_p5j10")
 
-[node name="GradientBackground" type="TextureRect" parent="." unique_id=1358844724]
+[node name="Control" type="Control" parent="." unique_id=400951741]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GradientBackground" type="TextureRect" parent="Control" unique_id=1358844724]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
@@ -45,6 +66,21 @@ grow_horizontal = 2
 texture = ExtResource("9_05qsj")
 expand_mode = 5
 stretch_mode = 3
+
+[node name="AreaLabel" type="Label" parent="Control" unique_id=1368313373]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 99.0
+grow_horizontal = 2
+size_flags_vertical = 0
+text = "Old Town"
+label_settings = SubResource("LabelSettings_rc4e3")
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1627985921]
 layout_mode = 1
@@ -106,10 +142,17 @@ grow_vertical = 2
 text = "Yay"
 label_settings = SubResource("LabelSettings_lhcu8")
 
-[node name="AreaLabel" type="Label" parent="MarginContainer" unique_id=1368313373]
+[node name="Prompt" type="Label" parent="MarginContainer/SpeechMarginContainer/SpeechBubble" unique_id=48262703]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 0
-text = "Old Town"
-label_settings = SubResource("LabelSettings_rc4e3")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.1
+anchor_right = 0.975
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press anywhere to continue"
+label_settings = SubResource("LabelSettings_ikji4")
 horizontal_alignment = 1
+vertical_alignment = 2

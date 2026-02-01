@@ -24,6 +24,10 @@ func _input(event: InputEvent) -> void:
 				current_land_area.interact()
 	
 	if event.is_action_pressed("back") or event.is_action_pressed("ui_cancel"):
+		# Disable leaving map when in dialogue
+		if DialogueManager.is_in_dialogue():
+			return
+		
 		if game_manager and game_manager.has_method("return_to_previous_map"):
 			%Camera2D.position_smoothing_enabled = false
 			_camera_smoothing_timer = CAMERA_SMOOTHING_PADDING
