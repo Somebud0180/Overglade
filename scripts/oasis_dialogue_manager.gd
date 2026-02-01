@@ -111,9 +111,6 @@ func start_dialogue(character: OasisCharacter) -> void:
 	current_traverser.prompt.connect(_on_prompt)
 	current_traverser.responses.connect(_on_responses)
 	current_traverser.finished.connect(_on_finished)
-	
-	# Start the dialogue
-	current_traverser.next()
 
 func _on_prompt(text: String) -> void:
 	if overlay_scene:

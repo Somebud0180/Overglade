@@ -149,6 +149,12 @@ func hide_responses() -> void:
 	await tween.finished
 	%ResponseMarginContainer.visible = false
 
+func _show_letter() -> void:
+	pass
+
+func _hide_letter() -> void:
+	pass
+
 func _on_response1_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if DialogueManager and DialogueManager.is_in_dialogue():

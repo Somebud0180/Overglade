@@ -5,7 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://swas3bmd3bj1" path="res://textures/interface/interact.png" id="2_sfd0e"]
 [ext_resource type="Script" uid="uid://bhaueknjc1gpt" path="res://scripts/interact_prompt.gd" id="4_0miq5"]
 [ext_resource type="Texture2D" uid="uid://cpu7peo34nmhd" path="res://textures/interface/back.png" id="4_p5j10"]
+[ext_resource type="Script" uid="uid://b8fo0vqrq63n2" path="res://addons/oasis_dialogue/public/oasis_character.gd" id="5_rc4e3"]
+[ext_resource type="Script" uid="uid://q08fswkl0eae" path="res://scripts/oasis_manager.gd" id="6_78ykd"]
 [ext_resource type="Script" uid="uid://btkcv2ywkxx5d" path="res://scripts/back_prompt.gd" id="6_nx175"]
+[ext_resource type="Script" uid="uid://4tygemljsgbp" path="res://scripts/traverser_controller.gd" id="7_ir5fa"]
 [ext_resource type="Texture2D" uid="uid://cywv5i5o345xi" path="res://textures/interface/chat_bubble.png" id="7_tn5s6"]
 [ext_resource type="FontFile" uid="uid://cvg7xg5lalb57" path="res://assets/PlaypenSans_Bundle/Variable/PlaypenSans[wght].ttf" id="8_lhcu8"]
 [ext_resource type="Texture2D" uid="uid://coegbrbnljs1e" path="res://textures/interface/gradient.png" id="9_05qsj"]
@@ -89,6 +92,25 @@ size_flags_vertical = 0
 text = "Old Town"
 label_settings = SubResource("LabelSettings_rc4e3")
 horizontal_alignment = 1
+
+[node name="Letter" type="Control" parent="." unique_id=1051076565]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OasisCharacter" type="Node" parent="Letter" unique_id=457217425 node_paths=PackedStringArray("manager")]
+script = ExtResource("5_rc4e3")
+manager = NodePath("../OasisManager")
+character = "Hark"
+metadata/_custom_type_script = "uid://b8fo0vqrq63n2"
+
+[node name="OasisManager" type="Node" parent="Letter" unique_id=1615903884 node_paths=PackedStringArray("track_controller")]
+script = ExtResource("6_78ykd")
+track_controller = NodePath("TraverserController")
+json_path = "res://assets/dialogue/dialogue.json"
+
+[node name="TraverserController" type="Node" parent="Letter/OasisManager" unique_id=234016535]
+script = ExtResource("7_ir5fa")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1627985921]
 layout_mode = 1

@@ -155,6 +155,7 @@ func next(response_index := 0) -> void:
 	if _responses.size() != 0:
 		_responded = true
 		_respond(response_index)
+		_responses.clear()
 
 	if _has_prompt():
 		prompted = true
@@ -163,8 +164,11 @@ func next(response_index := 0) -> void:
 	if _has_prompt():
 		return
 
-	_responses = _filter_responses()
+	if _responses.size() == 0:
+		_responses = _filter_responses()
+	
 	if _has_responses() and not _responded:
+		_responded = true
 		responses.emit(_translate_responses())
 	elif not prompted:
 		_event(&"finish")
