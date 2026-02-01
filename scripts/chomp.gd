@@ -3,27 +3,35 @@ class_name player
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+const CAMERA_SMOOTHING_PADDING = 0.1  # Time in seconds to allow camera to move instantly
 
 var is_in_land_area: bool = false
 var current_land_area: Area2D = null
 var current_boundary: boundary_area = null
 var game_manager: Node = null
+var _camera_smoothing_timer: float = 0.0
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if is_in_land_area and current_land_area:
 			if current_land_area.has_method("interact"):
 				%Camera2D.position_smoothing_enabled = false
+				_camera_smoothing_timer = CAMERA_SMOOTHING_PADDING
 				current_land_area.interact()
-				%Camera2D.position_smoothing_enabled = true
 	
 	if event.is_action_pressed("back") or event.is_action_pressed("ui_cancel"):
 		if game_manager and game_manager.has_method("return_to_previous_map"):
 			%Camera2D.position_smoothing_enabled = false
+			_camera_smoothing_timer = CAMERA_SMOOTHING_PADDING
 			game_manager.return_to_previous_map()
-			%Camera2D.position_smoothing_enabled = true
 
 func _physics_process(delta: float) -> void:	
+	# Handle camera smoothing padding timer
+	if _camera_smoothing_timer > 0:
+		_camera_smoothing_timer -= delta
+		if _camera_smoothing_timer <= 0:
+			%Camera2D.position_smoothing_enabled = true
+	
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if input_direction:
 		velocity = input_direction * SPEED

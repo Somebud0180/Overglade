@@ -7,8 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bor1ad8mv5ldj" path="res://textures/game/foreground1.png" id="3_tefeu"]
 [ext_resource type="Script" uid="uid://5r4arunnn30a" path="res://scripts/land_area.gd" id="4_iywne"]
 [ext_resource type="Script" uid="uid://cpygu3iyokoql" path="res://scripts/boundary.gd" id="5_gee14"]
-[ext_resource type="PackedScene" uid="uid://54aqamyocrl7" path="res://scenes/overlay.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://54aqamyocrl7" path="res://scenes/overlay_screen.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://krgh0ltpevtp" path="res://scenes/town.tscn" id="6_u5sy4"]
+[ext_resource type="Script" uid="uid://cff7qh8hd8pyb" path="res://scripts/loading_screen.gd" id="10_vtaks"]
 
 [node name="Game" type="Node2D" unique_id=1315257967 groups=["Game"]]
 script = ExtResource("1_p57ef")
@@ -71,4 +72,22 @@ position = Vector2(-21, -180)
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1265348656]
 
-[node name="Overlay" parent="Interface" unique_id=1150663332 instance=ExtResource("5_tbgi4")]
+[node name="OverlayScreen" parent="Interface" unique_id=1150663332 instance=ExtResource("5_tbgi4")]
+
+[node name="LoadingScreen" type="Control" parent="Interface" unique_id=1328725834]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_vtaks")
+
+[node name="ColorRect" type="ColorRect" parent="Interface/LoadingScreen" unique_id=1905368949]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
