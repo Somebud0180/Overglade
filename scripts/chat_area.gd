@@ -5,7 +5,7 @@ class_name chat_area
 @export var npc_name: String = "NPC"
 
 var overlay_scene: overlay_screen = null
-var _oasis_character: OasisCharacter = nThull
+var _oasis_character: OasisCharacter = null
 
 func _ready() -> void:
 	overlay_scene = get_tree().get_first_node_in_group("OverlayScreen")

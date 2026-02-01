@@ -5,6 +5,7 @@ var is_dialogue_active: bool = false
 var overlay_scene: overlay_screen = null
 var current_traverser: OasisTraverser = null
 var _waiting_for_response: bool = false
+var _current_responses: Array[String] = []
 
 signal dialogue_started
 signal dialogue_ended
@@ -18,25 +19,48 @@ func _input(event: InputEvent) -> void:
 	if not is_dialogue_active:
 		return
 	
-	# Accept any mouse button press or any key press to advance dialogue
-	var should_advance = false
-	if event is InputEventMouseButton and event.pressed:
-		should_advance = true
-	elif event is InputEventKey and event.pressed and not event.echo:
-		should_advance = true
-	
-	if should_advance:
-		advance_dialogue()
-		get_tree().get_root().set_input_as_handled()
+	if _waiting_for_response:
+		# Handle response selection
+		if event.is_action_pressed("response_one") and _current_responses.size() >= 1:
+			select_response(0)
+			get_tree().get_root().set_input_as_handled()
+			return
+		elif event.is_action_pressed("response_two") and _current_responses.size() >= 2:
+			select_response(1)
+			get_tree().get_root().set_input_as_handled()
+			return
+	else:
+		# Accept any mouse button press or any key press to advance dialogue
+		var should_advance = false
+		if event is InputEventMouseButton and event.pressed:
+			should_advance = true
+		elif event is InputEventKey and event.pressed and not event.echo:
+			should_advance = true
+		
+		if should_advance:
+			advance_dialogue()
+			get_tree().get_root().set_input_as_handled()
 
 func advance_dialogue() -> void:
-	if current_traverser:
-		if _waiting_for_response:
-			# Auto-select first response for now
-			current_traverser.next(0)
-			_waiting_for_response = false
-		else:
-			current_traverser.next()
+	if current_traverser and not _waiting_for_response:
+		current_traverser.next()
+
+func select_response(index: int) -> void:
+	if not current_traverser or not _waiting_for_response:
+		return
+	
+	if index < 0 or index >= _current_responses.size():
+		return
+	
+	_waiting_for_response = false
+	_current_responses.clear()
+	
+	# Hide response UI
+	if overlay_scene:
+		overlay_scene.hide_responses()
+	
+	# Select the response and continue
+	current_traverser.next(index)
 
 func is_in_dialogue() -> bool:
 	return is_dialogue_active
@@ -92,14 +116,17 @@ func _on_prompt(text: String) -> void:
 		overlay_scene.update_dialogue_bubble(character_name, text)
 
 func _on_responses(items: Array[String]) -> void:
-	# For now, auto-select first response
-	# In a full implementation, you'd show a choice menu here
-	if items.size() > 0:
-		_waiting_for_response = true
-		if overlay_scene:
-			overlay_scene.update_dialogue_bubble("Player", items[0])
-		# Auto-advance to select the response
-		advance_dialogue()
+	if items.size() == 0:
+		return
+	
+	_waiting_for_response = true
+	_current_responses = items
+	
+	if overlay_scene:
+		# Hide the main dialogue bubble
+		overlay_scene.hide_dialogue_bubble()
+		# Show response choices
+		overlay_scene.show_responses(items)
 
 func _on_finished() -> void:
 	end_dialogue()
@@ -112,6 +139,8 @@ func end_dialogue() -> void:
 		current_traverser = null
 	
 	is_dialogue_active = false
+	_waiting_for_response = false
+	_current_responses.clear()
 	dialogue_ended.emit()
 	
 	if overlay_scene:
